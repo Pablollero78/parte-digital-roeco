@@ -101,6 +101,7 @@ body {
   margin-bottom: 12px;
   overflow: hidden;
   box-shadow: var(--shadow);
+  overflow: visible;
 }
 .sec-head {
   background: var(--azul);
@@ -115,7 +116,7 @@ body {
   text-transform: uppercase;
 }
 .sec-head svg { opacity: .7; flex-shrink: 0; }
-.sec-body { padding: 14px 16px; }
+.sec-body { padding: 14px 16px; overflow: visible; }
 
 /* ── Fields ── */
 .fld { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
@@ -166,7 +167,7 @@ body {
   border: 1.5px solid var(--azul-med);
   border-radius: 8px;
   box-shadow: var(--shadow-md);
-  z-index: 200;
+  z-index: 9999;
   max-height: 240px;
   overflow-y: auto;
   display: none;
@@ -728,7 +729,8 @@ function filterGenCombo(id, list, allowNew) {
 }
 function selectGen(id, val) {
   document.getElementById(id).value = val;
-  document.getElementById('combo-' + id).classList.remove('open');
+  const box = document.getElementById('combo-' + id);
+  if (box) box.classList.remove('open');
   checkStatus();
 }
 function addAndSelect(id, val) {
