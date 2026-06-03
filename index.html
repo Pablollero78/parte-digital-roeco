@@ -449,7 +449,7 @@ body {
       <div class="grid2">
         <div class="fld">
           <label>Nº Parte <span class="req">*</span></label>
-          <input type="text" id="nparte" placeholder="001" oninput="checkStatus()">
+          <input type="text" id="nparte" placeholder="001" oninput="checkStatus()" onchange="checkStatus()">
         </div>
         <div class="fld">
           <label>Aeropuerto / Base <span class="req">*</span></label>
@@ -465,7 +465,7 @@ body {
       <div class="grid3">
         <div class="fld">
           <label>Fecha <span class="req">*</span></label>
-          <input type="date" id="fecha" oninput="checkStatus()">
+          <input type="date" id="fecha" oninput="checkStatus()" onchange="checkStatus()">
         </div>
         <div class="fld">
           <label>Hora inicio</label>
@@ -683,16 +683,22 @@ const hideTimers = {};
 
 // ── Status ────────────────────────────────────────────────────────────────────
 function checkStatus() {
-  const ok = v('expediente') && v('nparte') && v('aeropuerto') && v('fecha');
+  const exp   = (document.getElementById('expediente') || {}).value || '';
+  const np    = (document.getElementById('nparte')     || {}).value || '';
+  const aero  = (document.getElementById('aeropuerto') || {}).value || '';
+  const fecha = (document.getElementById('fecha')      || {}).value || '';
+  const ok = exp.trim() !== '' && np.trim() !== '' && aero.trim() !== '' && fecha.trim() !== '';
   const pill = document.getElementById('status-pill');
   const btn  = document.getElementById('btn-send');
   const txt  = document.getElementById('btn-text');
-  pill.className = 'status-pill ' + (ok ? 'ok' : 'warn');
-  pill.textContent = ok ? 'Listo' : 'Incompleto';
-  btn.disabled = !ok;
-  txt.textContent = ok ? 'Enviar parte a Drive' : 'Rellena los campos obligatorios';
+  if (pill) { pill.className = 'status-pill ' + (ok ? 'ok' : 'warn'); pill.textContent = ok ? 'Listo' : 'Incompleto'; }
+  if (btn)  { btn.disabled = !ok; }
+  if (txt)  { txt.textContent = ok ? 'Enviar parte a Drive' : 'Rellena los campos obligatorios'; }
 }
 function v(id) { return (document.getElementById(id)||{}).value || ''; }
+
+// Poll every 500ms as fallback for mobile events that don't fire reliably
+setInterval(checkStatus, 500);
 
 // ── Combo helpers ─────────────────────────────────────────────────────────────
 function scheduleHide(id) {
