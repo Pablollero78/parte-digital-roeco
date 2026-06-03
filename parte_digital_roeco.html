@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Parte de Trabajo · Roe-Co</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #1a3a6b;
+  --azul-med: #2563a8;
+  --azul-clar: #e8f0fb;
+  --accent: #f59e0b;
+  --accent-clar: #fef3c7;
+  --verde: #16a34a;
+  --verde-clar: #dcfce7;
+  --rojo: #dc2626;
+  --gris: #64748b;
+  --gris-clar: #f1f5f9;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --bg: #f8fafc;
+  --white: #ffffff;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+.header {
+  background: var(--azul);
+  padding: 16px 20px 14px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.header-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.header-logo {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,.6);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.header-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+.status-pill {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 99px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.status-pill.warn { background: var(--accent); color: #78350f; }
+.status-pill.ok   { background: var(--verde);  color: #fff; }
+
+/* ── Layout ── */
+.main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 16px 16px 120px;
+}
+
+/* ── Cards / Sections ── */
+.sec {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.sec-head {
+  background: var(--azul);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,.85);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.sec-head svg { opacity: .7; flex-shrink: 0; }
+.sec-body { padding: 14px 16px; }
+
+/* ── Fields ── */
+.fld { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+.fld:last-child { margin-bottom: 0; }
+.fld label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.fld input, .fld select, .fld textarea {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--text);
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color .15s;
+}
+.fld input:focus, .fld select:focus, .fld textarea:focus {
+  outline: none;
+  border-color: var(--azul-med);
+  box-shadow: 0 0 0 3px rgba(37,99,168,.12);
+}
+.fld select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+.fld textarea { resize: vertical; min-height: 70px; }
+.fld input[readonly] { background: var(--gris-clar); color: var(--gris); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+/* ── Combo ── */
+.combo-wrap { position: relative; }
+.combo-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: var(--white);
+  border: 1.5px solid var(--azul-med);
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+  z-index: 200;
+  max-height: 240px;
+  overflow-y: auto;
+  display: none;
+}
+.combo-dropdown.open { display: block; }
+.combo-opt {
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px solid var(--gris-clar);
+}
+.combo-opt:last-child { border-bottom: none; }
+.combo-opt:active, .combo-opt:hover { background: var(--azul-clar); }
+.combo-opt .badge-code {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--azul-clar);
+  color: var(--azul-med);
+  padding: 2px 7px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.combo-opt.new { color: var(--azul-med); font-style: italic; }
+.combo-empty { padding: 12px 14px; font-size: 13px; color: var(--text-muted); }
+
+/* ── Mediciones table ── */
+.med-row {
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  grid-template-columns: 1fr 1fr;
+}
+.med-row .span2 { grid-column: span 2; }
+.med-row .med-calcs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  grid-column: span 2;
+}
+.med-row .med-extras {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  grid-column: span 2;
+}
+.med-row select, .med-row input {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  padding: 8px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--text);
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.med-row select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 24px;
+}
+.med-row input[readonly] { background: var(--gris-clar); color: var(--azul-med); font-weight: 600; }
+.med-row select:focus, .med-row input:focus { outline: none; border-color: var(--azul-med); }
+.med-mini-label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 3px; letter-spacing: .04em; }
+
+/* ── Personal / Veh rows ── */
+.pers-row, .veh-row {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.pers-row { grid-template-columns: 1fr auto; }
+.veh-row  { grid-template-columns: 1fr auto; }
+.pers-inner { display: grid; grid-template-columns: 1fr; gap: 6px; }
+.pers-bottom { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.check-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--text);
+  background: var(--gris-clar);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  transition: all .15s;
+}
+.check-label input { width: 16px; height: 16px; accent-color: var(--azul-med); cursor: pointer; }
+.check-label:has(input:checked) {
+  background: var(--azul-clar);
+  border-color: var(--azul-med);
+  color: var(--azul);
+}
+.hours-input {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  padding: 6px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  width: 72px;
+  background: var(--white);
+  color: var(--text);
+  text-align: center;
+}
+.hours-input:focus { outline: none; border-color: var(--azul-med); }
+
+/* ── Materiales grid ── */
+.mat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+@media (min-width: 480px) {
+  .mat-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.mat-item { display: flex; flex-direction: column; gap: 4px; }
+.mat-item label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
+.mat-item input {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  padding: 8px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  width: 100%;
+  text-align: right;
+}
+.mat-item input:focus { outline: none; border-color: var(--azul-med); }
+
+/* ── Buttons ── */
+.btn-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1.5px dashed var(--verde);
+  color: var(--verde);
+  background: var(--verde-clar);
+  cursor: pointer;
+  margin-top: 4px;
+  transition: all .15s;
+}
+.btn-add:active { opacity: .75; }
+.btn-del {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1.5px solid #fecaca;
+  color: var(--rojo);
+  background: #fff5f5;
+  cursor: pointer;
+  font-size: 16px;
+  flex-shrink: 0;
+  align-self: center;
+}
+.btn-del:active { opacity: .7; }
+
+/* ── Send button ── */
+.send-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 12px 20px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  z-index: 100;
+  box-shadow: 0 -4px 16px rgba(0,0,0,.08);
+}
+.send-bar-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.btn-send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background: var(--azul);
+  color: #fff;
+  cursor: pointer;
+  transition: all .15s;
+  letter-spacing: .02em;
+}
+.btn-send:active { opacity: .85; transform: scale(.99); }
+.btn-send:disabled { background: var(--gris); cursor: not-allowed; opacity: .6; transform: none; }
+.btn-send.sending { background: var(--azul-med); }
+.btn-send.success { background: var(--verde); }
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--text);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 99px;
+  opacity: 0;
+  transition: all .3s;
+  white-space: nowrap;
+  z-index: 300;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.ok { background: var(--verde); }
+.toast.err { background: var(--rojo); }
+
+/* ── Divider ── */
+.divider { height: 1px; background: var(--gris-clar); margin: 10px 0; }
+
+/* ── Required mark ── */
+.req { color: var(--rojo); margin-left: 2px; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div>
+      <div class="header-logo">Roe-Co</div>
+      <div class="header-title">Parte de trabajo</div>
+    </div>
+    <div id="status-pill" class="status-pill warn">Incompleto</div>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- Datos generales -->
+  <div class="sec">
+    <div class="sec-head">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Datos generales
+    </div>
+    <div class="sec-body">
+      <div class="fld">
+        <label>Nº Expediente <span class="req">*</span></label>
+        <div class="combo-wrap">
+          <input type="text" id="expediente" placeholder="Buscar o crear expediente…" autocomplete="off"
+            oninput="filterGenCombo('expediente', expedientes, true); checkStatus()"
+            onfocus="filterGenCombo('expediente', expedientes, true)"
+            onblur="scheduleHide('expediente')">
+          <div id="combo-expediente" class="combo-dropdown"></div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="fld">
+          <label>Nº Parte <span class="req">*</span></label>
+          <input type="text" id="nparte" placeholder="001" oninput="checkStatus()">
+        </div>
+        <div class="fld">
+          <label>Aeropuerto / Base <span class="req">*</span></label>
+          <div class="combo-wrap">
+            <input type="text" id="aeropuerto" placeholder="MAD, BCN…" autocomplete="off"
+              oninput="filterAirportCombo(); checkStatus()"
+              onfocus="filterAirportCombo()"
+              onblur="scheduleHide('aeropuerto')">
+            <div id="combo-aeropuerto" class="combo-dropdown"></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid3">
+        <div class="fld">
+          <label>Fecha <span class="req">*</span></label>
+          <input type="date" id="fecha" oninput="checkStatus()">
+        </div>
+        <div class="fld">
+          <label>Hora inicio</label>
+          <input type="time" id="hora_inicio">
+        </div>
+        <div class="fld">
+          <label>Hora fin</label>
+          <input type="time" id="hora_fin">
+        </div>
+      </div>
+      <div class="fld">
+        <label>Jefe de equipo</label>
+        <div class="combo-wrap">
+          <input type="text" id="jefe_equipo" placeholder="Seleccionar…" autocomplete="off"
+            oninput="filterWorkerComboTop()"
+            onfocus="filterWorkerComboTop()"
+            onblur="scheduleHide('jefe_equipo')">
+          <div id="combo-jefe_equipo" class="combo-dropdown"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Localización -->
+  <div class="sec">
+    <div class="sec-head">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Localización de los trabajos
+    </div>
+    <div class="sec-body">
+      <div class="fld">
+        <textarea id="localizacion" placeholder="Describe la zona: pista, calle de rodadura, taxiway, apron…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mediciones -->
+  <div class="sec">
+    <div class="sec-head">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 6H3"/><path d="M10 12H3"/><path d="M10 18H3"/><polyline points="14 12 17 15 22 9"/></svg>
+      Mediciones
+    </div>
+    <div class="sec-body">
+      <div id="med-container"></div>
+      <button class="btn-add" onclick="addMed()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Añadir línea de medición
+      </button>
+    </div>
+  </div>
+
+  <!-- Materiales -->
+  <div class="sec">
+    <div class="sec-head">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+      Materiales consumidos
+    </div>
+    <div class="sec-body">
+      <div class="mat-grid">
+        <div class="mat-item"><label>Negro (kg)</label><input type="number" id="mat_negro" placeholder="0" min="0" step="0.1"></div>
+        <div class="mat-item"><label>Blanco (kg)</label><input type="number" id="mat_blanco" placeholder="0" min="0" step="0.1"></div>
+        <div class="mat-item"><label>Amarillo (kg)</label><input type="number" id="mat_amarillo" placeholder="0" min="0" step="0.1"></div>
+        <div class="mat-item"><label>Rojo (kg)</label><input type="number" id="mat_rojo" placeholder="0" min="0" step="0.1"></div>
+        <div class="mat-item"><label>Verde (kg)</label><input type="number" id="mat_verde" placeholder="0" min="0" step="0.1"></div>
+        <div class="mat-item"><label>Laca (kg)</label><input type="number" id="mat_laca" placeholder="0" min="0" step="0.1"></div>
+        <div class="mat-item"><label>Disolvente (kg)</label><input type="number" id="mat_disolvente" placeholder="0" min="0" step="0.1"></div>
+        <div class="mat-item"><label>Granalla (kg)</label><input type="number" id="mat_granalla" placeholder="0" min="0" step="0.1"></div>
+        <div class="mat-item"><label>Esferas (kg)</label><input type="number" id="mat_esferas" placeholder="0" min="0" step="0.1"></div>
+        <div class="mat-item"><label>Cinta (ud.)</label><input type="number" id="mat_cinta" placeholder="0" min="0"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Personal -->
+  <div class="sec">
+    <div class="sec-head">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Personal
+    </div>
+    <div class="sec-body">
+      <div id="pers-container"></div>
+      <button class="btn-add" onclick="addPers()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Añadir trabajador
+      </button>
+    </div>
+  </div>
+
+  <!-- Vehículos -->
+  <div class="sec">
+    <div class="sec-head">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      Vehículos y maquinaria
+    </div>
+    <div class="sec-body">
+      <div id="veh-container"></div>
+      <button class="btn-add" onclick="addVeh()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Añadir vehículo
+      </button>
+    </div>
+  </div>
+
+  <!-- Observaciones -->
+  <div class="sec">
+    <div class="sec-head">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Observaciones
+    </div>
+    <div class="sec-body">
+      <div class="fld">
+        <textarea id="observaciones" placeholder="Incidencias, meteorología, paradas por operaciones aéreas, cortes de pista…" style="min-height:90px"></textarea>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Send bar -->
+<div class="send-bar">
+  <div class="send-bar-inner">
+    <button class="btn-send" id="btn-send" onclick="enviarParte()" disabled>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      <span id="btn-text">Rellena los campos obligatorios</span>
+    </button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzywz7PEWkvbcIQHlNgi5cbhxfRgA33QU3wZB77szIFZu4s2TKWLEOmuX1VXvzoZtS0/exec";
+
+const trabajadores = [
+  {code:'JD',nombre:'José Francisco Delgado Reyes'},
+  {code:'MM',nombre:'Manuel Mancheño Cerro'},
+  {code:'MQ',nombre:'José Marcelo Quijo Mena'},
+  {code:'PO',nombre:'Pablo Ollero García Agulló'},
+  {code:'OG',nombre:'Oscar González Hernández'},
+  {code:'IC',nombre:'Iván Clavero Mediavilla'},
+  {code:'PP',nombre:'Plamen Pekov Yordanov'},
+  {code:'MO',nombre:'Miguel Angel Rojo Peinado'},
+  {code:'MI',nombre:'Mª Mar Vilchez Rodriguez'},
+  {code:'PS',nombre:'Jeam Paul Sánchez Restrepo'},
+  {code:'CI',nombre:'Catalin Iorga Bratu'},
+  {code:'DP',nombre:'Danut Patala'},
+  {code:'CL',nombre:'Carlos Alberto Londoño Taborda'},
+  {code:'YS',nombre:'Yuriy Shvorak'},
+  {code:'JU',nombre:'Juan Alberto Muñoz Rodrigo'},
+  {code:'AH',nombre:'Adrián Alonso Herrera Muñoz'},
+  {code:'EF',nombre:'Esperanza Fajardo Prieto'},
+];
+
+const aeropuertos = [
+  {iata:'MAD',nombre:'Madrid Barajas'},
+  {iata:'BCN',nombre:'Barcelona El Prat'},
+  {iata:'AGP',nombre:'Málaga Costa del Sol'},
+  {iata:'SCQ',nombre:'Santiago de Compostela'},
+  {iata:'PMI',nombre:'Palma de Mallorca'},
+  {iata:'VLC',nombre:'Valencia'},
+  {iata:'SVQ',nombre:'Sevilla'},
+  {iata:'BIO',nombre:'Bilbao'},
+  {iata:'LCG',nombre:'A Coruña'},
+  {iata:'OVD',nombre:'Asturias'},
+  {iata:'LEI',nombre:'Almería'},
+  {iata:'ALC',nombre:'Alicante Elche'},
+  {iata:'IBZ',nombre:'Ibiza'},
+  {iata:'MAH',nombre:'Menorca'},
+  {iata:'FUE',nombre:'Fuerteventura'},
+  {iata:'LPA',nombre:'Gran Canaria'},
+  {iata:'TFS',nombre:'Tenerife Sur'},
+  {iata:'TFN',nombre:'Tenerife Norte'},
+  {iata:'GRO',nombre:'Girona'},
+  {iata:'REU',nombre:'Reus'},
+  {iata:'VGO',nombre:'Vigo'},
+  {iata:'SDR',nombre:'Santander'},
+  {iata:'VIT',nombre:'Vitoria'},
+  {iata:'ZAZ',nombre:'Zaragoza'},
+  {iata:'GRX',nombre:'Granada'},
+  {iata:'MJV',nombre:'Murcia'},
+  {iata:'ACE',nombre:'Lanzarote'},
+  {iata:'SPC',nombre:'La Palma'},
+  {iata:'GMZ',nombre:'La Gomera'},
+  {iata:'MLN',nombre:'Melilla'},
+  {iata:'GANDO',nombre:'Base Aérea de Gando'},
+  {iata:'TRRJN',nombre:'Base Aérea de Torrejón'},
+  {iata:'GETAFE',nombre:'Base Aérea de Getafe'},
+  {iata:'ARMLLA',nombre:'Base Aérea de Armilla'},
+  {iata:'TALVRA',nombre:'Base Aérea de Talavera la Real'},
+];
+
+const vehiculos_lista = [
+  {code:'CR-1', nombre:'Camión MAN TGL · 5936 JWL'},
+  {code:'CR-2', nombre:'Camión DAIMLER 2536L · 7467 KRC'},
+  {code:'CR-3', nombre:'Camión MAN TGM · 5835 LTL'},
+  {code:'CR-4', nombre:'Camión MAN TGX · 3318 LWJ'},
+  {code:'FR-1', nombre:'Furgón IVECO 35S13 · 2280 JNW'},
+  {code:'FR-3', nombre:'Furgón IVECO 35S16 · 6522 LBB'},
+  {code:'FR-4', nombre:'Furgón FORD Transit · 3658 KGD'},
+  {code:'FR-11',nombre:'Furgoneta DACIA Dokker · 8597 KNC'},
+  {code:'FR-14',nombre:'Furgoneta CITROËN Berlingo XL · 6171 MLJ'},
+  {code:'FRN-21',nombre:'Furgoneta pequeña FRN-21'},
+  {code:'FRN-22',nombre:'Furgoneta pequeña FRN-22'},
+  {code:'GR-01',nombre:'Granalladora BLASTRAC 1-15DS'},
+  {code:'GR-02',nombre:'Granalladora BLASTRAC 2-20DT'},
+  {code:'PR-01',nombre:'Pintabandas HOFMANN H26-2'},
+  {code:'PR-03',nombre:'Pintabandas HOFMANN H26-3'},
+  {code:'RR-01',nombre:'Remolque CARRO CA10000PL3T · R9156BDB'},
+  {code:'RR-02',nombre:'Remolque CARRO STRICKER · R4885BDL'},
+];
+
+let expedientes = [];
+let counters = {med:0, pers:0, veh:0};
+const hideTimers = {};
+
+// ── Status ────────────────────────────────────────────────────────────────────
+function checkStatus() {
+  const ok = v('expediente') && v('nparte') && v('aeropuerto') && v('fecha');
+  const pill = document.getElementById('status-pill');
+  const btn  = document.getElementById('btn-send');
+  const txt  = document.getElementById('btn-text');
+  pill.className = 'status-pill ' + (ok ? 'ok' : 'warn');
+  pill.textContent = ok ? 'Listo' : 'Incompleto';
+  btn.disabled = !ok;
+  txt.textContent = ok ? 'Enviar parte a Drive' : 'Rellena los campos obligatorios';
+}
+function v(id) { return (document.getElementById(id)||{}).value || ''; }
+
+// ── Combo helpers ─────────────────────────────────────────────────────────────
+function scheduleHide(id) {
+  hideTimers[id] = setTimeout(() => {
+    const d = document.getElementById('combo-' + id);
+    if (d) { d.classList.remove('open'); }
+  }, 250);
+}
+
+function renderDropdown(boxId, items, onSelect, allowNew, query) {
+  const box = document.getElementById(boxId);
+  let html = '';
+  items.slice(0,12).forEach(item => {
+    if (typeof item === 'string') {
+      html += `<div class="combo-opt" ontouchstart="" onclick="${onSelect}('${item.replace(/'/g,"\\'")}')"><span>${item}</span></div>`;
+    } else if (item.iata) {
+      html += `<div class="combo-opt" ontouchstart="" onclick="selectAirport('${item.iata}')"><span>${item.nombre}</span><span class="badge-code">${item.iata}</span></div>`;
+    } else {
+      html += `<div class="combo-opt" ontouchstart="" onclick="selectWorkerOpt('${boxId.replace('combo-','')}','${item.nombre.replace(/'/g,"\\'")}','${item.code}')"><span>${item.nombre}</span><span class="badge-code">${item.code}</span></div>`;
+    }
+  });
+  if (allowNew && query && !items.some(x => (x.nombre||x).toLowerCase() === query.toLowerCase())) {
+    html += `<div class="combo-opt new" ontouchstart="" onclick="addAndSelect('${boxId.replace('combo-','')}','${query.replace(/'/g,"\\'")}')">+ Crear "${query}"</div>`;
+  }
+  if (!html) html = `<div class="combo-empty">Sin resultados</div>`;
+  box.innerHTML = html;
+  box.classList.add('open');
+}
+
+function filterGenCombo(id, list, allowNew) {
+  const q = v(id).toLowerCase();
+  const items = list.filter(x => x.toLowerCase().includes(q));
+  renderDropdown('combo-' + id, items, `selectGen.bind(null,'${id}')`, allowNew, v(id));
+}
+function selectGen(id, val) {
+  document.getElementById(id).value = val;
+  document.getElementById('combo-' + id).classList.remove('open');
+  checkStatus();
+}
+function addAndSelect(id, val) {
+  if (id === 'expediente' && !expedientes.includes(val)) expedientes.push(val);
+  selectGen(id, val);
+}
+
+function filterAirportCombo() {
+  const q = v('aeropuerto').toLowerCase();
+  const items = aeropuertos.filter(a => a.iata.toLowerCase().includes(q) || a.nombre.toLowerCase().includes(q));
+  renderDropdown('combo-aeropuerto', items, null, q.length > 0, q.toUpperCase());
+}
+function selectAirport(iata) {
+  document.getElementById('aeropuerto').value = iata;
+  document.getElementById('combo-aeropuerto').classList.remove('open');
+  checkStatus();
+}
+
+function filterWorkerComboTop() {
+  const q = v('jefe_equipo').toLowerCase();
+  const items = trabajadores.filter(t => t.nombre.toLowerCase().includes(q) || t.code.toLowerCase().includes(q));
+  renderDropdown('combo-jefe_equipo', items, null, false, '');
+}
+function selectWorkerOpt(inputId, nombre, code) {
+  document.getElementById(inputId).value = nombre;
+  const codeEl = document.getElementById(inputId + '_code');
+  if (codeEl) codeEl.value = code;
+  document.getElementById('combo-' + inputId).classList.remove('open');
+}
+
+// ── Mediciones ────────────────────────────────────────────────────────────────
+function addMed() {
+  const id = ++counters.med;
+  const div = document.createElement('div');
+  div.className = 'med-row'; div.id = 'med-' + id;
+  div.innerHTML = `
+    <div class="span2">
+      <div class="med-mini-label">Concepto / Localización</div>
+      <input type="text" id="mc_${id}" placeholder="Borde rodadura, cartelería, digits…" style="width:100%">
+    </div>
+    <div>
+      <div class="med-mini-label">Color</div>
+      <select id="mcol_${id}">
+        <option value="">—</option>
+        <option>Blanco</option><option>Amarillo</option><option>Rojo</option>
+        <option>Negro</option><option>Verde</option><option>Multicolor</option>
+      </select>
+    </div>
+    <div>
+      <div class="med-mini-label">Tipo aplicación</div>
+      <select id="mtip_${id}" style="font-size:12px">
+        <option value="">—</option>
+        <option value="Autom. 1ª mano blanco/amarillo/rojo">Autom. 1ª bl/am/ro</option>
+        <option value="Autom. 2ª mano blanco/amarillo/rojo">Autom. 2ª bl/am/ro</option>
+        <option value="Autom. 1ª mano negro">Autom. 1ª negro</option>
+        <option value="Autom. 2ª mano negro">Autom. 2ª negro</option>
+        <option value="Manual">Manual</option>
+        <option value="Granalla borrado">Granalla borrado</option>
+        <option value="Granalla limpieza">Granalla limpieza</option>
+        <option value="Laca imprimación">Laca imprimación</option>
+      </select>
+    </div>
+    <div class="med-calcs">
+      <div>
+        <div class="med-mini-label">Ud.</div>
+        <input type="number" id="mud_${id}" value="1" min="1" step="1" oninput="calcM2(${id})">
+      </div>
+      <div>
+        <div class="med-mini-label">Largo (m)</div>
+        <input type="number" id="mlg_${id}" placeholder="0" min="0" step="0.01" oninput="calcM2(${id})">
+      </div>
+      <div>
+        <div class="med-mini-label">Ancho (m)</div>
+        <input type="number" id="man_${id}" placeholder="0" min="0" step="0.01" oninput="calcM2(${id})">
+      </div>
+    </div>
+    <div class="med-extras">
+      <div>
+        <div class="med-mini-label">M²</div>
+        <input type="number" id="mm2_${id}" placeholder="—" readonly>
+      </div>
+      <div>
+        <div class="med-mini-label">Laca</div>
+        <select id="mlc_${id}"><option value="">No</option><option value="Sí">Sí</option></select>
+      </div>
+      <div>
+        <div class="med-mini-label">Granalla</div>
+        <select id="mgr_${id}"><option value="">No</option><option value="borrado">Borrado</option><option value="limpieza">Limpieza</option></select>
+      </div>
+    </div>
+    <div class="span2" style="display:flex;justify-content:flex-end;margin-top:4px">
+      <button class="btn-del" onclick="document.getElementById('med-${id}').remove()" title="Eliminar">×</button>
+    </div>`;
+  document.getElementById('med-container').appendChild(div);
+}
+function calcM2(id) {
+  const ud = parseFloat(document.getElementById('mud_'+id).value)||0;
+  const lg = parseFloat(document.getElementById('mlg_'+id).value)||0;
+  const an = parseFloat(document.getElementById('man_'+id).value)||0;
+  const m2 = ud*lg*an;
+  document.getElementById('mm2_'+id).value = m2 > 0 ? m2.toFixed(2) : '';
+}
+
+// ── Personal ──────────────────────────────────────────────────────────────────
+function addPers() {
+  const id = ++counters.pers;
+  const div = document.createElement('div');
+  div.className = 'pers-row'; div.id = 'pers-' + id;
+  div.innerHTML = `
+    <div class="pers-inner">
+      <div class="combo-wrap">
+        <input type="text" id="pn_${id}" placeholder="Buscar trabajador…" autocomplete="off"
+          oninput="filterPersCombo(${id})" onfocus="filterPersCombo(${id})"
+          onblur="setTimeout(()=>document.getElementById('pc_${id}').classList.remove('open'),250)">
+        <div id="pc_${id}" class="combo-dropdown"></div>
+        <input type="hidden" id="pcode_${id}">
+      </div>
+      <div class="pers-bottom">
+        <span style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.03em">Horas:</span>
+        <input type="number" class="hours-input" id="ph_${id}" placeholder="8" min="0" max="24" step="0.5">
+        <label class="check-label"><input type="checkbox" id="pdc_${id}"> Dieta completa</label>
+        <label class="check-label"><input type="checkbox" id="pmd_${id}"> Media dieta</label>
+      </div>
+    </div>
+    <button class="btn-del" onclick="document.getElementById('pers-${id}').remove()" title="Eliminar">×</button>`;
+  document.getElementById('pers-container').appendChild(div);
+}
+function filterPersCombo(id) {
+  const q = (document.getElementById('pn_'+id)||{}).value.toLowerCase();
+  const items = trabajadores.filter(t => t.nombre.toLowerCase().includes(q)||t.code.toLowerCase().includes(q));
+  const box = document.getElementById('pc_'+id);
+  let html = '';
+  items.slice(0,10).forEach(t => {
+    html += `<div class="combo-opt" ontouchstart="" onclick="selectPers(${id},'${t.nombre.replace(/'/g,"\\'")}','${t.code}')"><span>${t.nombre}</span><span class="badge-code">${t.code}</span></div>`;
+  });
+  if (!html) html = `<div class="combo-empty">Sin resultados</div>`;
+  box.innerHTML = html; box.classList.add('open');
+}
+function selectPers(id, nombre, code) {
+  document.getElementById('pn_'+id).value = nombre;
+  document.getElementById('pcode_'+id).value = code;
+  document.getElementById('pc_'+id).classList.remove('open');
+}
+
+// ── Vehículos ─────────────────────────────────────────────────────────────────
+function addVeh() {
+  const id = ++counters.veh;
+  const div = document.createElement('div');
+  div.className = 'veh-row'; div.id = 'veh-' + id;
+  div.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div>
+        <div class="med-mini-label" style="margin-bottom:4px">Vehículo / Máquina</div>
+        <div class="combo-wrap">
+          <input type="text" id="vn_${id}" placeholder="Buscar código o modelo…" autocomplete="off"
+            oninput="filterVehCombo(${id})" onfocus="filterVehCombo(${id})"
+            onblur="setTimeout(()=>document.getElementById('vc_${id}').classList.remove('open'),250)"
+            style="font-size:14px;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;width:100%;font-family:'DM Sans',sans-serif">
+          <div id="vc_${id}" class="combo-dropdown"></div>
+          <input type="hidden" id="vcode_${id}">
+        </div>
+      </div>
+      <div>
+        <div class="med-mini-label" style="margin-bottom:4px">Combustible CEPSA (€)</div>
+        <input type="number" id="vf_${id}" placeholder="0.00" min="0" step="0.01"
+          style="font-family:'DM Mono',monospace;font-size:14px;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;width:120px;text-align:right">
+      </div>
+    </div>
+    <button class="btn-del" onclick="document.getElementById('veh-${id}').remove()" title="Eliminar">×</button>`;
+  document.getElementById('veh-container').appendChild(div);
+}
+function filterVehCombo(id) {
+  const q = (document.getElementById('vn_'+id)||{}).value.toLowerCase();
+  const items = vehiculos_lista.filter(v => v.code.toLowerCase().includes(q)||v.nombre.toLowerCase().includes(q));
+  const box = document.getElementById('vc_'+id);
+  let html = '';
+  items.slice(0,12).forEach(v => {
+    html += `<div class="combo-opt" ontouchstart="" onclick="selectVeh(${id},'${v.code}','${v.nombre.replace(/'/g,"\\'")}')"><span>${v.nombre}</span><span class="badge-code">${v.code}</span></div>`;
+  });
+  if (!html) html = `<div class="combo-empty">Sin resultados</div>`;
+  box.innerHTML = html; box.classList.add('open');
+}
+function selectVeh(id, code, nombre) {
+  document.getElementById('vn_'+id).value = code + ' · ' + nombre;
+  document.getElementById('vcode_'+id).value = code;
+  document.getElementById('vc_'+id).classList.remove('open');
+}
+
+// ── Collect & Send ────────────────────────────────────────────────────────────
+function collectData() {
+  const meds = [];
+  document.querySelectorAll('[id^="mc_"]').forEach(el => {
+    const id = el.id.replace('mc_','');
+    if (!document.getElementById('med-'+id)) return;
+    meds.push({
+      concepto: el.value,
+      color:    (document.getElementById('mcol_'+id)||{}).value||'',
+      tipo:     (document.getElementById('mtip_'+id)||{}).value||'',
+      ud:       parseFloat((document.getElementById('mud_'+id)||{}).value)||1,
+      largo:    parseFloat((document.getElementById('mlg_'+id)||{}).value)||0,
+      ancho:    parseFloat((document.getElementById('man_'+id)||{}).value)||0,
+      m2:       parseFloat((document.getElementById('mm2_'+id)||{}).value)||0,
+      laca:     (document.getElementById('mlc_'+id)||{}).value||'',
+      granalla: (document.getElementById('mgr_'+id)||{}).value||'',
+    });
+  });
+  const pers = [];
+  document.querySelectorAll('[id^="pn_"]').forEach(el => {
+    const id = el.id.replace('pn_','');
+    if (!document.getElementById('pers-'+id)||!el.value) return;
+    pers.push({
+      nombre: el.value,
+      code:   (document.getElementById('pcode_'+id)||{}).value||'',
+      horas:  parseFloat((document.getElementById('ph_'+id)||{}).value)||0,
+      dc:     (document.getElementById('pdc_'+id)||{}).checked||false,
+      md:     (document.getElementById('pmd_'+id)||{}).checked||false,
+    });
+  });
+  const vehs = [];
+  document.querySelectorAll('[id^="vn_"]').forEach(el => {
+    const id = el.id.replace('vn_','');
+    if (!document.getElementById('veh-'+id)||!el.value) return;
+    vehs.push({
+      code:       (document.getElementById('vcode_'+id)||{}).value||'',
+      nombre:     el.value,
+      combustible: parseFloat((document.getElementById('vf_'+id)||{}).value)||0,
+    });
+  });
+  const mats = {};
+  ['negro','blanco','amarillo','rojo','verde','laca','disolvente','granalla','esferas','cinta'].forEach(m => {
+    const val = parseFloat((document.getElementById('mat_'+m)||{}).value)||0;
+    if (val) mats[m] = val;
+  });
+  return {
+    expediente:   v('expediente'),
+    nparte:       v('nparte'),
+    aeropuerto:   v('aeropuerto'),
+    fecha:        v('fecha'),
+    hora_inicio:  v('hora_inicio'),
+    hora_fin:     v('hora_fin'),
+    jefe_equipo:  v('jefe_equipo'),
+    localizacion: v('localizacion'),
+    observaciones:v('observaciones'),
+    mediciones: meds, personal: pers, vehiculos: vehs, materiales: mats,
+  };
+}
+
+function showToast(msg, type='', duration=3500) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast ' + type;
+  setTimeout(() => t.classList.add('show'), 10);
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+async function enviarParte() {
+  const btn = document.getElementById('btn-send');
+  const txt = document.getElementById('btn-text');
+  btn.disabled = true; btn.classList.add('sending');
+  txt.textContent = 'Enviando a Drive…';
+
+  const data = collectData();
+
+  try {
+    const resp = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+    const result = await resp.json();
+
+    if (result.status === 'ok') {
+      btn.classList.remove('sending'); btn.classList.add('success');
+      txt.textContent = '✓ Parte enviado correctamente';
+      showToast('✓ Guardado en Drive: ' + result.filename, 'ok', 5000);
+    } else {
+      throw new Error(result.message || 'Error desconocido');
+    }
+  } catch(err) {
+    btn.classList.remove('sending'); btn.disabled = false;
+    txt.textContent = 'Enviar parte a Drive';
+    showToast('Error al enviar. Inténtalo de nuevo.', 'err', 4000);
+    console.error(err);
+  }
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+document.getElementById('fecha').valueAsDate = new Date();
+addMed(); addPers(); addVeh();
+checkStatus();
+</script>
+</body>
+</html>
